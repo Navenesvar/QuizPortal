@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon</title>
+    <style>
+        body {
+            background-color: #240e0b; 
+            color: #ecf0f1;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        .container h1 {
+            font-size: 3em;
+            margin-bottom: 0.5em;
+        }
+        .container p {
+            font-size: 1.5em;
+            margin-bottom: 1.5em;
+        }
+        .container a {
+            display: inline-block;
+            padding: 0.75em 1.5em;
+            background-color: #59323c; 
+            color: #fff; /* White */
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+        }
+        .container a:hover {
+            background-color: #3f1f27;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Coming Soon</h1>
+        <p>We're working on this quiz. Check back later!</p>
+        <a th:href="@{/takeQuiz(username=${username})}">Back to Quizzes</a>
+    </div>
+</body>
+</html>

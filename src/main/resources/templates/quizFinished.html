@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Finished</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #240e0b; 
+            color: white;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.9); 
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            color: #000;
+            text-align: center;
+        }
+        .container h2 {
+            color: #59323c;
+        }
+        .container p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .action-button {
+            background-color: #59323c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        .action-button:hover {
+            background-color: #3f1f27;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Quiz Finished</h2>
+        <p>Congratulations <span th:text="${username}"></span>!</p>
+        <p>Timestamp: <span th:text="${timestamp}"></span></p>
+        <p>Your Score: <span th:text="${score}"></span> out of <span th:text="${totalQuestions}"></span></p>
+        <p>Passing Marks: <span th:text="${passingMarks}"></span></p>
+        <p>Verdict: <span th:text="${verdict}"></span></p>
+        <p>Thank you for participating in the quiz.</p>
+        <a th:href="@{/dashboard(username=${username})}" class="action-button">Back to Dashboard</a>
+    </div>
+</body>
+</html>

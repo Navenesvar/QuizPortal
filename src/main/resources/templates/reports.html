@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Reports</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #240e0b; 
+      color: #ffffff;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      max-width: 800px;
+      background-color: rgba(255, 255, 255, 0.9); 
+      border-radius: 5px;
+      padding: 20px;
+      color: #000;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: 
+      color: #fff;
+    }
+    td {
+      background-color: #f2f2f2;
+    }
+    a {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #59323c;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: background-color 0.3s;
+    }
+    a:hover {
+      background-color: #3f1f27;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Quiz Reports for <span th:text="${username}"></span></h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Quiz ID</th>
+          <th>Quiz Title</th>
+          <th>Score</th>
+          <th>Total Marks</th>
+          <th>Passing Marks</th>
+          <th>Verdict</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="history : ${historyList}">
+          <td th:text="${history.quizId}"></td>
+          <td th:text="${history.quizTitle}"></td>
+          <td th:text="${history.score}"></td>
+          <td th:text="${history.totalMarks}"></td>
+          <td th:text="${history.passingMarks}"></td>
+          <td th:text="${history.verdict}"></td>
+          <td th:text="${history.timestamp}"></td>
+        </tr>
+      </tbody>
+    </table>
+    <a th:href="@{/dashboard(username=${username})}">Back to Dashboard</a>
+  </div>
+</body>
+</html>

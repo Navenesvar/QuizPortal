@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #240e0b; 
+            color: #ffffff; 
+            padding: 20px;
+        }
+        .add-quiz-button {
+            background-color: #59323c; 
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .add-quiz-button:hover {
+            background-color: #3f1f27; 
+        }
+        a {
+            color: #bbdefb; 
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #b3b3b3; 
+            margin-left: 10px;
+        }
+        a:hover {
+            background-color: #d3d3d3; 
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: #ffffff; 
+        }
+        th, td {
+            border: 1px solid #b3b3b3; 
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #59323c; 
+            color: #ffffff; 
+        }
+        .action-button {
+            background-color: #59323c; 
+            color: #ffffff;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .action-button:hover {
+            background-color: #3f1f27; 
+        }
+    </style>
+</head>
+<body>
+    <h2>Quiz Creation Page</h2>
+    <a th:href="@{/quizform(username=${username})}" class="add-quiz-button">Add Quiz</a>
+
+    <h3>Existing Quizzes</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="quiz : ${quizzes}">
+                <td th:text="${quiz.title}">Sample Title</td>
+                <td th:text="${quiz.description}">Sample Description</td>
+                <td>
+                    <a th:href="@{/quiz/update(id=${quiz.id},username=${username})}" class="action-button">Update</a>
+                    <a th:href="@{/quiz/delete(id=${quiz.id},username=${username})}" class="action-button" 
+                       onclick="return confirm('Are you sure you want to delete this quiz?');">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

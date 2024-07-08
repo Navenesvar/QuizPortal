@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Take Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #240e0b; 
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center; 
+      align-items: center; 
+      min-height: 100vh; 
+    }
+    .container {
+      max-width: 800px;
+      width: 100%;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: rgba(255, 255, 255, 0.9); 
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    }
+    .quiz-box {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 20px;
+      margin-bottom: 20px;
+      background-color: rgba(255, 255, 255, 0.8); 
+    }
+    .quiz-box h3 {
+      margin-top: 0;
+      color: #59323c;
+    }
+    .quiz-box p {
+      color: #333;
+    }
+    .quiz-box .take-quiz-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #59323c;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: background-color 0.3s;
+    }
+    .quiz-box .take-quiz-button:hover {
+      background-color: #3f1f27;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Available Quizzes</h2>
+    <div th:each="quiz : ${quizzes}" class="quiz-box">
+      <h3 th:text="${quiz.title}">Quiz Title</h3>
+      <p th:text="${quiz.description}">Quiz Description</p>
+      <a th:href="@{/startQuiz(id=${quiz.id},username=${username})}" class="take-quiz-button">Take Quiz</a>
+    </div>
+  </div>
+</body>
+</html>

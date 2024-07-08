@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Quiz Application - Sign Up</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #240e0b; 
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      width: 400px;
+      background-color: rgba(255, 255, 255, 0.9); 
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #59323c; 
+    }
+    label {
+      font-weight: bold;
+      color: #333;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      background-color: #f2f2f2; 
+    }
+    select {
+      appearance: none;
+    }
+    input[type="submit"] {
+      background-color: #59323c; 
+      color: #fff; 
+      border: none;
+      padding: 12px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease; 
+    }
+    input[type="submit"]:hover {
+      background-color:#3f1f27; 
+    }
+    .container .signup-link {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .container .signup-link a {
+      color: #59323c; 
+      text-decoration: none;
+    }
+    .container .signup-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Online Quiz Application - Sign Up</h2>
+    <div th:if="${error}" class="alert alert-danger">
+      <p th:text="${error}"></p>
+    </div>
+    <form action="/signup" th:href="@{/signup}" method="post">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email" required>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+      <label for="confirmPassword">Confirm Password:</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" required>
+      <input type="submit" id="submit" value="Sign Up">
+    </form>
+    <div class="login-link">
+      <p>Already have an account? <a th:href="@{/login}">Log in</a></p>
+    </div>
+  </div>
+</body>
+</html>

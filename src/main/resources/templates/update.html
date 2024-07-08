@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #240e0b;
+            color: #ffffff;
+            padding: 20px;
+        }
+        .navbar {
+            display: flex;
+            background-color: #59323c;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .navbar-item {
+            margin-right: 20px;
+            cursor: pointer;
+            color: white;
+            text-decoration: none;
+        }
+        .navbar-item:hover {
+            background-color: #3f1f27;
+        }
+        .content {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center; 
+        }
+        .section {
+            background-color: #59323c;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 50%; 
+            margin-bottom: 20px;
+        }
+        .section-title {
+            margin-top: 0;
+        }
+        .form-label {
+            display: inline-block;
+            width: 100px;
+            font-weight: bold;
+        }
+        .form-input {
+            padding: 5px;
+            width: 300px;
+        }
+        .action-button {
+            background-color: #fff;
+            color: #3f1f27;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .action-button:hover {
+            background-color: #59323c;
+        }
+        .add-question-button {
+            display: block;
+            background-color: #3f1f27;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .add-question-button:hover {
+            background-color: #3f1f27;
+        }
+        .popup-form {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color:#59323c;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            width: 500px;
+        }
+        .popup-form input, .popup-form textarea {
+            margin-bottom: 10px;
+            padding: 10px;
+            width: calc(100% - 20px);
+        }
+        .popup-form .action-button {
+            display: inline-block;
+        }
+        .popup-form .close-button {
+            background-color: #fff;
+            margin-left: 10px;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #59323c;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #3f1f27;
+        }
+        tr:hover {
+            background-color: #59323c;
+        }
+        td {
+            color: #ffffff;
+        }
+    </style>
+    <script>
+    function showSection(sectionId) {
+        var sections = document.getElementsByClassName('section');
+        for (var i = 0; i < sections.length; i++) {
+            sections[i].style.display = 'none';
+        }
+        document.getElementById(sectionId).style.display = 'block';
+    }
+
+    function openPopup() {
+        document.getElementById('popup-form').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+    }
+
+    function closePopup() {
+        document.getElementById('popup-form').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+    }
+
+    function submitForm() {
+        var form = document.getElementById('add-question-form');
+        var formData = new FormData(form);
+
+        fetch(form.action, {
+            method: form.method,
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(result => {
+            showSection('questions');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+        return false;
+    }
+</script>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="#" class="navbar-item" onclick="showSection('quiz-details')">Quiz Details</a>
+        <a href="#" class="navbar-item" onclick="showSection('questions')">Questions</a>
+    </div>
+
+    <div class="content">
+        <div id="quiz-details" class="section">
+            <h3 class="section-title">Quiz Details</h3>
+            <form th:object="${quiz}" th:action="@{/quiz/update(id=${quiz.id},username=${username})}" method="post">
+                <div>
+                    <label class="form-label">Title:</label>
+                    <input type="text" th:field="*{title}" class="form-input" required>
+                </div>
+                <div>
+                    <label class="form-label">Description:</label>
+                    <textarea th:field="*{description}" class="form-input" rows="4" required></textarea>
+                </div>
+                <div>
+                    <label class="form-label">Created At:</label>
+                    <input type="text" th:field="*{createdAt}" class="form-input" readonly>
+                </div><br />
+                <div>
+                    <button type="submit" class="action-button">Save Details</button>
+                    <a th:href="@{/createQuiz}" class="action-button">Cancel</a>
+                </div>
+            </form>
+        </div>
+
+        <div id="questions" class="section" style="display: none;">
+            <h3 class="section-title">Questions</h3>
+            <button class="add-question-button" onclick="openPopup()">Add Question</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Question</th>
+                        <th>Option A</th>
+                        <th>Option B</th>
+                        <th>Option C</th>
+                        <th>Option D</th>
+                        <th>Correct</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="question : ${questions}">
+                        <td th:text="${question.id}"></td>
+                        <td th:text="${question.question}"></td>
+                        <td th:text="${question.optionA}"></td>
+                        <td th:text="${question.optionB}"></td>
+                        <td th:text="${question.optionC}"></td>
+                        <td th:text="${question.optionD}"></td>
+                        <td th:text="${question.correct}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="overlay" class="overlay" onclick="closePopup()"></div>
+    <div id="popup-form" class="popup-form">
+        <h3>Add Question</h3>
+        <form id="add-question-form" th:action="@{/addquestion}" method="post" onsubmit="return submitForm()">
+            <input type="hidden" th:name="quizId" th:value="${quiz.id}" />
+            <input type="hidden" th:name="username" th:value="${username}" />
+            <div>
+                <label class="form-label">Question:</label>
+                <input type="text" name="question" required>
+            </div>
+            <div>
+                <label class="form-label">Option A:</label>
+                <input type="text" name="optionA" required>
+            </div>
+            <div>
+                <label class="form-label">Option B:</label>
+                <input type="text" name="optionB" required>
+            </div>
+            <div>
+                <label class="form-label">Option C:</label>
+                <input type="text" name="optionC" required>
+            </div>
+            <div>
+                <label class="form-label">Option D:</label>
+                <input type="text" name="optionD" required>
+            </div>
+            <div>
+                <label class="form-label">Correct Option:</label>
+                <input type="text" name="correct" required>
+            </div>
+            <div>
+                <button type="submit" class="action-button">Save Question</button>
+                <button type="button" class="action-button close-button" onclick="closePopup()">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
