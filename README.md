@@ -4,7 +4,7 @@ Quizzer is a platform that enables users to create and take quizzes. Users can i
 
 ## Features
 
-- User Registration and Authentication
+- User Registration
 - Create Quizzes with Multiple-Choice Questions
 - Take Quizzes and Receive Immediate Feedback
 - View Past Quizzes and Scores
